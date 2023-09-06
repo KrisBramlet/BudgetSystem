@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:vm="clr-namespace:BudgetSystem.ViewModels"
+             xmlns:charts="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts"
+             x:Class="BudgetSystem.Pages.AddExpensePage"
+             Title="AddExpensePage">
+    <VerticalStackLayout>
+        <VerticalStackLayout.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#410380"
+                                  Offset="0.1"/>
+                <GradientStop Color="#9948f0"
+                                  Offset="1.0"/>
+            </LinearGradientBrush>
+        </VerticalStackLayout.Background>
+        <Entry 
+            x:Name="entryWhere" 
+            FontSize="18" 
+            WidthRequest="350" HeightRequest="60" Margin="{OnPlatform Android='0,15,0,0'}" 
+            Placeholder="Where was the purchase made?" Completed="EntryWhere_Completed"
+            TextColor="White" PlaceholderColor="Gray"/>
+        <Entry 
+            x:Name="entryWhat" 
+            FontSize="18" 
+            WidthRequest="350" HeightRequest="60" 
+            Placeholder="What was purchased?" Completed="EntryWhat_Completed"
+            TextColor="White" PlaceholderColor="Gray"/>
+        <core:SfNumericEntry 
+            x:Name="entryCost"
+            FontSize="18"
+            WidthRequest="350" HeightRequest="60" 
+            CustomFormat="C2" ShowClearButton="true" Placeholder="How much was spent?" 
+            BackgroundColor="Transparent" TextColor="White" PlaceholderColor="Gray"/>
+        <Picker 
+            x:Name="pickerCat" 
+            Title="Choose a Category" FontSize="18" 
+            WidthRequest="350" HeightRequest="60" 
+            ItemsSource="{Binding StrCatList}"
+            BackgroundColor="Transparent"
+            TextColor="White"  />
+        <Entry 
+            x:Name="entryNotes" 
+            FontSize="14" 
+            WidthRequest="350" HeightRequest="60" 
+            Placeholder="Notes"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button 
+            x:Name="btnSave" 
+            Text="Save Expense" FontSize="14" 
+            Grid.Column="1"
+            WidthRequest="150" Margin="{OnPlatform Android='0,10,0,0'}" 
+            Clicked="BtnSaveOnClicked" />
+            <Button 
+            x:Name="btnRemove" 
+            Text="Remove Expense" FontSize="14" 
+            Grid.Column="0"
+            WidthRequest="150" Margin="{OnPlatform Android='0,10,0,0'}" 
+            IsVisible="false"
+            Clicked="BtnRemoveOnClicked" />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

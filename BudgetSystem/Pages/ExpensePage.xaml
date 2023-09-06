@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fa="clr-namespace:BudgetSystem.FontModels"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             x:Class="BudgetSystem.Pages.ExpensePage"
+             Title="Expenses">
+    
+    <Grid BackgroundColor="#141414">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Top BoxView -->
+            <RowDefinition Height="*" />
+            <RowDefinition Height=".005*" />
+            <!-- Bottom BoxView and pickers -->
+        </Grid.RowDefinitions>
+        
+
+        <!-- Top BoxView -->
+        <BoxView Grid.Row ="0" HeightRequest="1" BackgroundColor="White" Margin="10,5" VerticalOptions="End"/>
+
+        <!-- Scrollable area for CollectionView -->
+        <ScrollView Grid.Row="1">
+            <StackLayout>
+                <StackLayout.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                        <GradientStop Color="#410380"
+                                  Offset=".4"/>
+                        <GradientStop Color="#9948f0"
+                                  Offset="1.0"/>
+                    </LinearGradientBrush>
+                </StackLayout.Background>
+                <CollectionView x:Name="cvExpenseList" ItemsSource="{Binding expenseList}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="10"
+                                   HasShadow="True"
+                                   BackgroundColor="{StaticResource TransparentColor}"
+                                   BorderColor="Black"
+                                   IsClippedToBounds="True"
+                                   CornerRadius="5">
+                                <Frame.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#805fb8"
+                                  Offset="0.2"/>
+                                        <GradientStop Color="#251245"
+                                  Offset="1.0"/>
+                                    </LinearGradientBrush>
+                                </Frame.Background>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="{OnPlatform Android=Auto, Default=Auto}" />
+                                        <!-- Row 0 for 'where' -->
+                                        <RowDefinition Height="{OnPlatform Android=Auto, Default=Auto}" />
+                                        <!-- Row 1 for 'what' -->
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{OnPlatform Android=.75*, Default=Auto}" />
+                                        <!-- Column 0 for 'where' and 'what' -->
+                                        <ColumnDefinition Width="{OnPlatform Android=.6*, Default=Auto}" />
+                                        <!-- Column 1 for 'category' -->
+                                        <ColumnDefinition Width="{OnPlatform Android=.1*, Default=Auto}" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Display 'where' property (Row 0, Column 0) -->
+                                    <Label 
+                                        Grid.Row="0"
+                                        Grid.Column="0" 
+                                        Text="{Binding name}"
+                                        TextColor="White"
+                                        FontSize="20" 
+                                        Padding="{OnPlatform Android='20,0,0,0', Default='20,10,0,0'}"/>
+
+                                    <!-- Display 'what' property (Row 1, Column 0) -->
+                                    <Label 
+                                        Grid.Row="1"
+                                        Grid.Column="0" 
+                                        Text="{Binding details}"
+                                        FontSize="16"
+                                        Padding="{OnPlatform Android='40,0,0,0', Default='50,0,0,0'}"
+                                        TextColor="Gray"/>
+
+                                    <!-- Display 'category' property (Row 0, Column 1) -->
+                                    <Label 
+                                        Grid.Row="0"
+                                        Grid.Column="1" 
+                                        Text="{Binding category}" 
+                                        FontSize="16" 
+                                        HorizontalOptions="EndAndExpand"
+                                        Padding="{OnPlatform Android='0,0,0,0', Default='10,20,10,10'}" 
+                                        TextColor="Gray"/>
+
+                                    <!-- Display 'cost' property (Row 0, Column 2) -->
+                                    <Label 
+                                        Grid.Row="1"
+                                        Grid.Column="1" 
+                                        Text="{Binding cost, StringFormat='Cost: {0:C}'}" 
+                                        FontSize="18" 
+                                        HorizontalOptions="EndAndExpand"
+                                        Padding="{OnPlatform Android='0,0,0,0', Default='10,0,10,0'}"
+                                        TextColor="White"/>
+
+                                    <!-- Button to handle the click event -->
+                                    <Button Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Clicked="OnExpenseTapped" BackgroundColor="Transparent" CommandParameter="{Binding .}">
+                                        
+                                    </Button>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Bottom BoxView -->
+        <BoxView HeightRequest="1" Grid.Row="2" VerticalOptions="Start" BackgroundColor="White" Margin="0" />
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".33*"/>
+                <ColumnDefinition Width=".33*"/>
+                <ColumnDefinition Width=".33*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- "Add Expense" button (Fixed at the bottom) -->
+            <Button 
+                x:Name="btnAdd"
+                FontFamily="FaSolid"
+                FontSize="24"
+                Text="{x:Static fa:FaSolid.Plus}"
+                Clicked="BtnAddOnClicked"
+                HeightRequest="60"
+                WidthRequest="120"
+                Grid.Row="2"
+                Grid.Column="2"
+                HorizontalOptions="End"
+                Margin="{OnPlatform Android='0,0,20,0', Default='0,0,20,10'}" 
+                IsVisible="true"/>
+            <!-- "Filter/Sort" button (Fixed at the bottom) -->
+            <Button 
+                x:Name="btnFilter"
+                FontFamily="FaSolid"
+                FontSize="24"
+                Text="{x:Static fa:FaSolid.Filter}"
+                Clicked="FSOnClicked"
+                HeightRequest="60"
+                WidthRequest="120"
+                Grid.Row="2"
+                Grid.Column="2"
+                HorizontalOptions="End"
+                Margin="{OnPlatform Android='0,0,20,0', Default='0,0,20,10'}" 
+                IsVisible="false"/>
+            <Button 
+                x:Name="btnSort"
+                FontFamily="FaSolid"
+                FontSize="30"
+                Text="{x:Static fa:FaSolid.Sort}"
+                Clicked="FSOnClicked"
+                HeightRequest="60"
+                WidthRequest="120"
+                Grid.Row="2"
+                Grid.Column="2"
+                HorizontalOptions="End"
+                Margin="{OnPlatform Android='0,0,20,0', Default='0,0,20,10'}" 
+                IsVisible="false"/>
+
+            <!-- "Sort By" picker (Fixed at the bottom) -->
+            <Label Text="Sort" 
+                   FontSize="18"
+               Grid.Row="2"
+               Grid.Column="0"
+               HorizontalOptions="Start" Margin="20,10,0,0"
+                   TextColor="#a27ee0"/>
+            <CheckBox x:Name="chkSort"
+                  Grid.Row="2" 
+                  Grid.Column="0"
+                  HorizontalOptions="Center" Margin="30,0,0,65"
+                  CheckedChanged="ChkSortOnCheckedChanged"
+                      Color="#a27ee0"/>
+            <core:SfComboBox x:Name="pickerSortBy" 
+                             Placeholder="Sort By"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="3"
+                             WidthRequest="230" HeightRequest="50" 
+                             Margin="{OnPlatform Android='0,50,140,0', Default='0,0,0,20'}"
+                             BackgroundColor="Transparent"
+                             PlaceholderColor="White"
+                             TextColor="White"
+                             DropDownIconColor="White"
+                             IsVisible="false">
+            <core:SfComboBox.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>ID</x:String>
+                        <x:String>Name</x:String>
+                        <x:String>Details</x:String>
+                        <x:String>Category</x:String>
+                        <x:String>Cost</x:String>
+                    </x:Array>
+                </core:SfComboBox.ItemsSource>
+            </core:SfComboBox>
+
+            <!-- "Filter By" picker (Fixed at the bottom) -->
+            <Label Text="Filter" 
+                   FontSize="18"
+               Grid.Row="2"
+               Grid.Column="1"
+               HorizontalOptions="Start" Margin="10,10,0,0"
+                   TextColor="#a27ee0"/>
+            <CheckBox x:Name="chkFilter" 
+                  Grid.Row="2" 
+                  Grid.Column="1"
+                  HorizontalOptions="Center" Margin="30,0,0,65"
+                  CheckedChanged="ChkFilterOnCheckedChanged"
+                      Color="#a27ee0"/>
+            <core:SfComboBox x:Name="pickerFilterBy" 
+                             Placeholder="Filter By"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="3"
+                             WidthRequest="230" HeightRequest="50" 
+                             Margin="{OnPlatform Android='0,50,140,0', Default='0,0,0,20'}"
+                             BackgroundColor="Transparent"
+                             PlaceholderColor="White"
+                             TextColor="White"
+                             DropDownIconColor="White"
+                             ItemsSource="{Binding strCatList}" 
+                             IsVisible="false">
+            </core:SfComboBox>
+        </Grid>
+    </Grid>
+</ContentPage>

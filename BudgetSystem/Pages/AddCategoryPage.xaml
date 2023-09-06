@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:core="clr-namespace:Syncfusion.Maui.Core;assembly=Syncfusion.Maui.Core"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BudgetSystem.Pages.AddCategoryPage"
+             Title="AddCategoryPage">
+    <VerticalStackLayout>
+        <Label Text="Enter a name for your category." 
+               HorizontalOptions="Center" Padding="20"/>
+        
+        <Entry x:Name="newCat" Placeholder="Category Name" Margin="20" />
+
+        <Label Text="Pick A Color to Associate with Category" 
+               HorizontalOptions="Center" Padding="20"/>
+
+        <Grid 
+            ColumnDefinitions=".2*,.2*,.2*,.2*,.2*"
+            RowDefinitions="75,75,75">
+
+            <core:SfChip x:Name="chipLightRed" Grid.Column="1" Grid.Row="0" 
+                         BackgroundColor="PaleVioletRed" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked" />
+            
+            <core:SfChip x:Name="chipRed" Grid.Column="2" Grid.Row="0" 
+                         BackgroundColor="Red" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50"  Clicked="chipClicked"/>
+            
+            <core:SfChip x:Name="chipDarkRed" Grid.Column="3" Grid.Row="0"
+                         BackgroundColor="DarkRed" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+          
+            <core:SfChip x:Name="chipLightGreen" Grid.Column="1" Grid.Row="1"
+                         BackgroundColor="MediumSpringGreen" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+            
+            <core:SfChip x:Name="chipTeal" Grid.Column="2" Grid.Row="1"
+                         BackgroundColor="MediumSeaGreen" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+
+            <core:SfChip x:Name="chipGreen" Grid.Column="3" Grid.Row="1"
+                         BackgroundColor="ForestGreen" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+
+            <core:SfChip x:Name="chipLightYellow" Grid.Column="1" Grid.Row="2"
+                         BackgroundColor="LightGoldenrodYellow" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+
+            <core:SfChip x:Name="chipYellow" Grid.Column="2" Grid.Row="2"
+                         BackgroundColor="Yellow" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+
+            <core:SfChip x:Name="chipGrey" Grid.Column="3" Grid.Row="2"
+                         BackgroundColor="#303133" StrokeThickness="4" HeightRequest="50" WidthRequest="50" CornerRadius="50" Clicked="chipClicked"/>
+
+
+
+
+
+
+
+
+        </Grid>
+
+        <Button x:Name="btnSubmit" Text="Submit" Clicked="BtnSubmitOnClicked" Margin="20"/>
+
+    </VerticalStackLayout>
+</ContentPage>
